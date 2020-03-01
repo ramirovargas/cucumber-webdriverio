@@ -55,6 +55,10 @@ Then('I expect to not be able to login', () => {
   $('.aviso.alert.alert-danger').waitForDisplayed(5000);
 });
 
+When('I try to register', () => {
+  var cajaLogIn = $('.cajaSignUp');
+  cajaLogIn.$('button=Registrarse').click();
+});
 
 When(/^I fill with (.*) and (.*)$/, (email, password) => {
   var cajaLogIn = $('.cajaLogIn');
@@ -75,4 +79,34 @@ Then('I expect to see {string}', error => {
   $('.aviso.alert.alert-danger').waitForDisplayed(8000);
   var alertText = browser.$('.aviso.alert.alert-danger').getText();
   expect(alertText).to.include(error);
+});
+
+When(/^I fill registration with (.*), (.*), (.*) and (.*)$/, (name, lastName,email, password) => {
+  var cajaSignUp = $('.cajaSignUp');
+  cajaSignUp.waitForExist(5000);
+  cajaSignUp.waitForDisplayed(5000);
+  var nameInput = cajaSignUp.$('input[name="nombre"]');
+  nameInput.click();
+  nameInput.keys(name);
+  var nameLastInput = cajaSignUp.$('input[name="apellido"]');
+  nameLastInput.click();
+  nameLastInput.keys(lastName);
+  var mailInput = cajaSignUp.$('input[name="correo"]');
+  mailInput.click();
+  mailInput.keys(email);
+  var selectProgram = $('/html/body/div[2]/div[2]/div/div/div/div/div/div[1]/div/form/div/fieldset/div/select');
+  selectProgram.selectByAttribute('value',1);
+  var passwordInput = cajaSignUp.$('input[name="password"]');
+  passwordInput.click();
+  passwordInput.keys(password)
+  var checkBox = $('/html/body/div[2]/div[2]/div/div/div/div/div/div[1]/div/form/fieldset[6]/div/label/input');
+  checkBox.waitForExist(5000);
+  checkBox.waitForDisplayed(5000);
+  checkBox.click();
+});
+
+Then('I expect to see success {string}', resp => {
+  $('.sweet-alert').waitForDisplayed(8000);
+  var alertText = browser.$('.sweet-alert').getText();
+  expect(alertText).to.include(resp);
 });

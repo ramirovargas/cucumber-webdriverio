@@ -20,4 +20,4 @@ Scenario: Login with  right inputs
     When I open the login screen
     And I fill a right email and password
     And I try to login
-    Then I expect to login sucessfull
+    Then I expect to login sucessfull   
